@@ -5,6 +5,13 @@ from database import get_db
 import crud
 import pydantic_models
 
+'''''router = APIRouter(prefix="/inventory", tags=["inventory"])
+
+@router.get("/health", response_model=List[pydantic_models.InventoryHealth])
+async def get_inventory_health(db: Session = Depends(get_db)):
+    """Return stock and reorder status"""
+    return crud.get_inventory_health(db)'''''
+
 router = APIRouter(prefix="/inventory", tags=["inventory"])
 
 from typing import List, Union, Optional
@@ -15,9 +22,6 @@ from typing import List, Union, Optional
     summary="Get inventory health",
     description="""
 Return stock and reorder status.
-
-- If `warehouse_id` **and** `product_id` are provided → returns a single inventory object.
-- If no filters or only one filter is provided → returns a list of inventory items.
 """,
     response_description="Inventory health information (single object or list)"
 )
